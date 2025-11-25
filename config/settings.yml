@@ -1,0 +1,115 @@
+search:
+  engine: "serpapi"  # using SerpAPI (Google results)
+  results_per_query: 20
+  queries:
+    # Metal Mining queries
+    - "metal mining environmental impact El Salvador site:gov OR site:edu"
+    - "minería metálica El Salvador impacto ambiental"
+    - "gold mining copper mining El Salvador"
+    - "mining pollution water quality El Salvador"
+    - "El Salvador mining ban metallic minerals"
+
+    # Bitcoin El Salvador queries
+    - "Bitcoin El Salvador economic impact"
+    - "Bitcoin adoption El Salvador results"
+    - "impacto económico Bitcoin El Salvador"
+    - "Ley Bitcoin El Salvador evaluación"
+    - "El Salvador Bitcoin tourism remittances"
+    - "Bitcoin Beach El Salvador analysis"
+
+rss:
+  enabled: true
+  feeds:
+    - "https://news.google.com/rss/search?q=El+Salvador+Bitcoin&hl=en-US&gl=US&ceid=US:en"
+    - "https://news.google.com/rss/search?q=mining+El+Salvador&hl=en-US&gl=US&ceid=US:en"
+    - "https://www.reuters.com/finance/markets/commodities/rss"
+    - "https://apnews.com/apf-topnews.rss"
+
+credibility:
+  # Trusted domains - high quality sources
+  whitelist_domains:
+    # International News
+    - "reuters.com"
+    - "apnews.com"
+    - "bbc.com"
+    - "nytimes.com"
+    - "washingtonpost.com"
+    - "theguardian.com"
+    - "bloomberg.com"
+    - "ft.com"
+
+    # Spanish/Latin American News
+    - "elpais.com"
+    - "elfaro.net"
+    - "laprensagrafica.com"
+    - "eldiariodehoy.com"
+    - "bnamericas.com"
+
+    # Government & International Organizations
+    - "worldbank.org"
+    - "imf.org"
+    - "un.org"
+    - "bcr.gob.sv"
+    - "marn.gob.sv"
+    - "minec.gob.sv"
+
+    # Academic & Research
+    - "jstor.org"
+    - "sciencedirect.com"
+    - "nature.com"
+    - "sciencemag.org"
+    - "oxford.ac.uk"
+    - "cambridge.org"
+
+    # Crypto & Bitcoin News
+    - "coindesk.com"
+    - "cointelegraph.com"
+    - "bitcoin.com"
+    - "decrypt.co"
+
+  # TLD whitelist for additional credibility
+  whitelist_tlds:
+    - ".gov"
+    - ".edu"
+    - ".org"
+    - ".ac.uk"
+
+  # Minimum article length (characters)
+  min_article_len: 500
+
+  # Require HTTPS
+  require_https: false  # Some .gov sites still use HTTP
+
+  # Minimum credibility indicators (author, citations, etc)
+  min_indicators: 1
+
+  # Minimum credibility score to keep article (0-1)
+  min_score: 0.4
+
+crawl:
+  user_agent: "ESV-PolicyResearchBot/1.0 (Educational Research; +contact@research.edu)"
+  max_per_domain: 5
+  timeout_sec: 20
+  sleep_sec: 2.0
+  max_retries: 2
+
+storage:
+  sqlite_path: "data/processed/mining_btc_esv.db"
+  csv_path: "data/processed/articles.csv"
+  excel_path: "data/processed/articles.xlsx"
+
+nlp:
+  # Enable/disable different analyses
+  enable_sentiment: true
+  enable_stance: true
+  enable_summary: true
+  enable_language_detection: true
+
+  # Text truncation for performance
+  max_text_for_sentiment: 2000
+  max_text_for_stance: 1500
+  max_text_for_summary: 3000
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "data/scraper.log"

@@ -1,0 +1,33 @@
+# Web scraping and content extraction
+requests>=2.31.0
+urllib3<2.0  # Fix OpenSSL compatibility warning
+trafilatura>=1.6.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+lxml_html_clean>=0.1.0  # Required for lxml.html.clean
+
+# RSS feed parsing
+feedparser>=6.0.10
+
+# Data processing
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# Progress bars
+tqdm>=4.65.0
+
+# Configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# NLP and ML
+langdetect>=1.0.9
+transformers>=4.30.0
+torch>=2.0.0
+sentencepiece>=0.1.99
+
+# Scheduling (optional)
+apscheduler>=3.10.0
+
+# SerpAPI (optional, can also use direct HTTP)
+google-search-results>=2.4.2
