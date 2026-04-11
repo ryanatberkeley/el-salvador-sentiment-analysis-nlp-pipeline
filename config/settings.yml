@@ -1,6 +1,6 @@
 search:
   engine: "serpapi"  # using SerpAPI (Google results)
-  results_per_query: 20
+  results_per_query: 50
   queries:
     # Metal Mining queries
     - "metal mining environmental impact El Salvador site:gov OR site:edu"
@@ -8,6 +8,27 @@ search:
     - "gold mining copper mining El Salvador"
     - "mining pollution water quality El Salvador"
     - "El Salvador mining ban metallic minerals"
+    - "El Salvador metal mining ban reversed 2024 protests"
+    - "reversión prohibición minería metálica El Salvador"
+    - "Nayib Bukele $3 trillion unmined gold El Salvador"
+    - "Santa Elena mine El Salvador environmental impact"
+    - "El Salvador foreign mining companies investment"
+    - "El Salvador mining"
+    - "minería El Salvador"
+    - "Nayib Bukele mining"
+    # Historical context & International lawsuits
+    - "OceanaGold Pac Rim lawsuit El Salvador"
+    - "El Salvador water crisis mining"
+    - "Cabañas water defenders El Salvador"
+    
+    # Specific environmental impacts
+    - "contaminación Río Lempa minería"
+    - "defensores del agua El Salvador minería"
+    - "El Salvador deforestation metal extraction"
+    
+    # Economic/Investment angles
+    - "Central America mining investment Bukele"
+    - "derogación ley contra minería El Salvador"
 
     # Bitcoin El Salvador queries
     - "Bitcoin El Salvador economic impact"
@@ -16,6 +37,27 @@ search:
     - "Ley Bitcoin El Salvador evaluación"
     - "El Salvador Bitcoin tourism remittances"
     - "Bitcoin Beach El Salvador analysis"
+    - "El Salvador Bitcoin IMF loan $1.4B"
+    - "El Salvador removes Bitcoin legal tender status"
+    - "Bitcoin City El Salvador foreign investment"
+    - "FMI préstamo El Salvador Ley Bitcoin derogación"
+    - "El Salvador Bitcoin"
+    - "criptomonedas El Salvador"
+    - "Chivo wallet El Salvador"
+    # Energy & Infrastructure
+    - "Volcano bonds El Salvador"
+    - "geothermal Bitcoin mining El Salvador"
+    - "minería Bitcoin energía geotérmica El Salvador"
+    
+    # International Finance & Ratings
+    - "World Bank El Salvador Bitcoin"
+    - "Moody's El Salvador credit rating crypto"
+    - "bonos volcán El Salvador"
+    
+    # Tourism & Daily Use
+    - "El Salvador crypto tourism"
+    - "turismo cripto El Salvador"
+    - "Bukele Bitcoin purchases reserves"
 
 rss:
   enabled: true
@@ -42,6 +84,8 @@ credibility:
     - "elpais.com"
     - "elfaro.net"
     - "laprensagrafica.com"
+    - "elsalvador.com"
+    - "elmundo.sv"
     - "eldiariodehoy.com"
     - "bnamericas.com"
 
@@ -84,11 +128,11 @@ credibility:
   min_indicators: 1
 
   # Minimum credibility score to keep article (0-1)
-  min_score: 0.4
+  min_score: 0.3
 
 crawl:
   user_agent: "ESV-PolicyResearchBot/1.0 (Educational Research; +contact@research.edu)"
-  max_per_domain: 5
+  max_per_domain: 100
   timeout_sec: 20
   sleep_sec: 2.0
   max_retries: 2

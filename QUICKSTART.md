@@ -29,7 +29,7 @@ cp .env.example .env
 
 # Edit .env and paste your key
 # Change this line:
-SERPAPI_KEY=your_serpapi_key_here
+SERPAPI_KEY=yourapikey
 # To:
 SERPAPI_KEY=abc123your_actual_key_here
 ```

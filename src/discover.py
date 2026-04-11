@@ -18,50 +18,64 @@ class URLDiscoverer:
         self.search_config = config.get("search", {})
         self.rss_config = config.get("rss", {})
         self.serpapi_key = get_env_variable("SERPAPI_KEY", required=True)
-
-    def serpapi_search(self, query, num_results=20):
+#changed by ryan
+    def serpapi_search(self, query, num_results=50):
         """
-        Search using SerpAPI (Google results)
-        Docs: https://serpapi.com/search-api
+        Search using SerpAPI with pagination for paid accounts
         """
-        logger.info(f"Searching SerpAPI for: {query}")
+        logger.info(f"Searching SerpAPI for: {query} (Target: {num_results} results)")
 
-        params = {
-            "api_key": self.serpapi_key,
-            "q": query,
-            "num": min(num_results, 100),  # Max 100 per request
-            "engine": "google",
-            "google_domain": "google.com",
-            "gl": "us",
-            "hl": "en"
-        }
+        all_query_results = []
+        results_per_page = 10  # Google standard organic results per page
+        
+        # Loop through pages using the 'start' parameter (0, 10, 20, 30...)
+        for start_index in range(0, num_results, results_per_page):
+            logger.debug(f"Fetching results {start_index} to {start_index + results_per_page}...")
+            
+            params = {
+                "api_key": self.serpapi_key,
+                "q": query,
+                "num": results_per_page,  
+                "start": start_index,     # <--- This tells Google to go to the next page!
+                "engine": "google",
+                "google_domain": "google.com",
+                "gl": "us",
+                "hl": "en"
+            }
 
-        try:
-            url = "https://serpapi.com/search?" + urlencode(params)
-            response = requests.get(url, timeout=30)
-            response.raise_for_status()
+            try:
+                url = "https://serpapi.com/search?" + urlencode(params)
+                response = requests.get(url, timeout=30)
+                response.raise_for_status()
 
-            data = response.json()
+                data = response.json()
+                page_results = data.get("organic_results", [])
+                
+                # If Google runs out of relevant articles, stop early
+                if not page_results:
+                    logger.info(f"Reached the end of Google's results at index {start_index}.")
+                    break
 
-            # Extract organic results
-            results = []
-            for item in data.get("organic_results", []):
-                results.append({
-                    "title": item.get("title", ""),
-                    "url": item.get("link", ""),
-                    "snippet": item.get("snippet", ""),
-                    "source": "serpapi"
-                })
+                for item in page_results:
+                    all_query_results.append({
+                        "title": item.get("title", ""),
+                        "url": item.get("link", ""),
+                        "snippet": item.get("snippet", ""),
+                        "source": "serpapi"
+                    })
+                
+                # Be polite to the API, tiny sleep between page requests
+                time.sleep(0.5)
 
-            logger.info(f"Found {len(results)} results for query: {query}")
-            return results
+            except requests.RequestException as e:
+                logger.error(f"SerpAPI request failed for query '{query}' at start={start_index}: {e}")
+                break
+            except Exception as e:
+                logger.error(f"Error parsing SerpAPI results: {e}")
+                break
 
-        except requests.RequestException as e:
-            logger.error(f"SerpAPI request failed for query '{query}': {e}")
-            return []
-        except Exception as e:
-            logger.error(f"Error parsing SerpAPI results: {e}")
-            return []
+        logger.info(f"Found {len(all_query_results)} total results for query: {query}")
+        return all_query_results
 
     def rss_discover(self):
         """Discover URLs from RSS feeds"""
@@ -82,7 +96,7 @@ class URLDiscoverer:
                     results.append({
                         "title": entry.get("title", ""),
                         "url": entry.get("link", ""),
-                        "snippet": entry.get("summary", "")[:200],
+                        "snippet": str(entry.get("summary", ""))[:200], #ryan changed here
                         "source": "rss"
                     })
 
