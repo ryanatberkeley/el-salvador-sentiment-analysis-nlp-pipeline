@@ -57,3 +57,9 @@ Thumbs.db
 # Model cache
 .cache/
 models/
+
+# Local backups and earlier run outputs
+backup_src/
+data/run1_first_attempt/
+data/stopped_run/
+data/old/

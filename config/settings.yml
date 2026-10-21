@@ -97,13 +97,14 @@ credibility:
     - "marn.gob.sv"
     - "minec.gob.sv"
 
+    # commented out - we want news media only!
     # Academic & Research
-    - "jstor.org"
-    - "sciencedirect.com"
-    - "nature.com"
-    - "sciencemag.org"
-    - "oxford.ac.uk"
-    - "cambridge.org"
+    # - "jstor.org"
+    # - "sciencedirect.com"
+    # - "nature.com"
+    # - "sciencemag.org"
+    # - "oxford.ac.uk"
+    # - "cambridge.org"
 
     # Crypto & Bitcoin News
     - "coindesk.com"
@@ -152,7 +153,7 @@ nlp:
   # Text truncation for performance
   max_text_for_sentiment: 2000
   max_text_for_stance: 1500
-  max_text_for_summary: 3000
+  max_text_for_summary: 6000
 
 logging:
   level: "INFO"  # DEBUG, INFO, WARNING, ERROR

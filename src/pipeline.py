@@ -156,6 +156,8 @@ class ScraperPipeline:
             if self.credibility_scorer.should_keep(article, score):
                 credible_articles.append(article)
 
+        logger.info(f"Credible articles: {len(credible_articles)} of {len(extracted_articles)}")
+
         if not credible_articles:
             logger.error("No credible articles found. Exiting.")
             return
@@ -180,6 +182,8 @@ class ScraperPipeline:
                 logger.error(f"NLP analysis failed for {article['url']}: {e}")
                 continue
 
+        logger.info(f"On-topic articles: {len(analyzed_articles)} of {len(credible_articles)}")
+
         if not analyzed_articles:
             logger.error("No on-topic articles found. Exiting.")
             return
@@ -195,7 +199,8 @@ class ScraperPipeline:
             "sentiment_metal_mining", "sentiment_bitcoin", "specific_concerns",
             "cred_score", "cred_domain_whitelisted", "cred_length_ok", "cred_https",
             "cred_has_byline", "cred_has_citations", "cred_indicator_count",
-            "summary", "text", "text_length", "discovery_source", "scraped_at"
+            "summary", "text", "text_length", "discovery_source",
+            "search_query", "search_window", "fetched_via", "scraped_at"
         ]
 
         final_columns = [col for col in column_order if col in df.columns]
@@ -217,7 +222,8 @@ class ScraperPipeline:
         df["bitcoin_score"] = df["sentiment_bitcoin"].map(sentiment_map)
 
         # Group by Topic and then Source Type
-        grouped = df.groupby(["topic", "source_type"]).agg(
+        # dropna=False keeps articles whose source type is unknown in the table
+        grouped = df.groupby(["topic", "source_type"], dropna=False).agg(
             article_count=("id", "count"),
             avg_mining_sentiment=("mining_score", "mean"),
             avg_bitcoin_sentiment=("bitcoin_score", "mean")
