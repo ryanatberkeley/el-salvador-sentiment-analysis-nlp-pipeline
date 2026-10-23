@@ -63,3 +63,8 @@ backup_src/
 data/run1_first_attempt/
 data/stopped_run/
 data/old/
+
+# Course-tool logs and run outputs
+.server_logs/
+data/run*/
+data/test_run/
